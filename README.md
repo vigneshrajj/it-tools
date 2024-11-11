@@ -6,6 +6,8 @@
 
 Useful tools for developer and people working in IT. [Have a look !](https://it-tools.tech).
 
+**Note**: This fork allows accepting default text from query parameters for some of the tools.
+
 ## Sponsors
 
 [![Fern banner](./.github/fern-banner.svg)](https://bit.ly/3zBl7DG)
