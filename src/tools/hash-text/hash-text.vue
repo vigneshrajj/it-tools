@@ -21,7 +21,8 @@ type AlgoNames = keyof typeof algos;
 type Encoding = keyof typeof enc | 'Bin';
 const algoNames = Object.keys(algos) as AlgoNames[];
 const encoding = useQueryParam<Encoding>({ defaultValue: 'Hex', name: 'encoding' });
-const clearText = ref('');
+const defaultText = useQueryParam<string>({ defaultValue: '', name: 'defaultText' });
+const clearText = ref(defaultText);
 
 function formatWithEncoding(words: lib.WordArray, encoding: Encoding) {
   if (encoding === 'Bin') {

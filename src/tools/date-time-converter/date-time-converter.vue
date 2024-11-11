@@ -28,8 +28,10 @@ import {
 } from './date-time-converter.models';
 import { withDefaultOnError } from '@/utils/defaults';
 import { useValidation } from '@/composable/validation';
+import { useQueryParam } from '@/composable/queryParams';
 
-const inputDate = ref('');
+const defaultText = useQueryParam<string>({ defaultValue: '', name: 'defaultText' });
+const inputDate = ref(defaultText);
 
 const toDate: ToDateMapper = date => new Date(date);
 
@@ -115,11 +117,14 @@ const normalizedDate = computed(() => {
 });
 
 function onDateInputChanged(value: string) {
+	console.log('works?')
   const matchingIndex = formats.findIndex(({ formatMatcher }) => formatMatcher(value));
   if (matchingIndex !== -1) {
     formatIndex.value = matchingIndex;
   }
 }
+
+onDateInputChanged(inputDate.value);
 
 const validation = useValidation({
   source: inputDate,

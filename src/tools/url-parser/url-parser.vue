@@ -2,8 +2,11 @@
 import InputCopyable from '../../components/InputCopyable.vue';
 import { isNotThrowing } from '@/utils/boolean';
 import { withDefaultOnError } from '@/utils/defaults';
+import { useQueryParam } from '@/composable/queryParams';
 
-const urlToParse = ref('https://me:pwd@it-tools.tech:3000/url-parser?key1=value&key2=value2#the-hash');
+const defaultText = useQueryParam<string>({ defaultValue:'https://me:pwd@it-tools.tech:3000/url-parser?key1=value&key2=value2#the-hash', name: 'defaultText' });
+
+const urlToParse = ref(defaultText);
 
 const urlParsed = computed(() => withDefaultOnError(() => new URL(urlToParse.value), undefined));
 const urlValidationRules = [

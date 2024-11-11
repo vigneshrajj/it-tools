@@ -2,15 +2,19 @@
 import { useCopy } from '@/composable/copy';
 import { base64ToText, isValidBase64, textToBase64 } from '@/utils/base64';
 import { withDefaultOnError } from '@/utils/defaults';
+import { useQueryParam } from '@/composable/queryParams';
+
+const defaultText = useQueryParam<string>({ defaultValue: '', name: 'defaultText' });
+const shouldEncode = useQueryParam<string>({ defaultValue: '', name: 'shouldEncode' });
 
 const encodeUrlSafe = useStorage('base64-string-converter--encode-url-safe', false);
 const decodeUrlSafe = useStorage('base64-string-converter--decode-url-safe', false);
 
-const textInput = ref('');
+const textInput = ref(shouldEncode.value == "true" ? defaultText : '');
 const base64Output = computed(() => textToBase64(textInput.value, { makeUrlSafe: encodeUrlSafe.value }));
 const { copy: copyTextBase64 } = useCopy({ source: base64Output, text: 'Base64 string copied to the clipboard' });
 
-const base64Input = ref('');
+const base64Input = ref(shouldEncode.value == "true" ? '' : defaultText);
 const textOutput = computed(() =>
   withDefaultOnError(() => base64ToText(base64Input.value.trim(), { makeUrlSafe: decodeUrlSafe.value }), ''),
 );

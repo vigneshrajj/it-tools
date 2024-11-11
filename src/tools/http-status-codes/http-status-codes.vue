@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { codesByCategories } from './http-status-codes.constants';
 import { useFuzzySearch } from '@/composable/fuzzySearch';
+import { useQueryParam } from '@/composable/queryParams';
 
-const search = ref('');
+const defaultText = useQueryParam<string>({ defaultValue:  '', name: 'defaultText' });
+
+const search = ref(defaultText);
 
 const { searchResult } = useFuzzySearch({
   search,

@@ -2,8 +2,11 @@
 import slugify from '@sindresorhus/slugify';
 import { withDefaultOnError } from '@/utils/defaults';
 import { useCopy } from '@/composable/copy';
+import { useQueryParam } from '@/composable/queryParams';
 
-const input = ref('');
+const defaultText = useQueryParam<string>({ defaultValue:  '', name: 'defaultText' });
+
+const input = ref(defaultText);
 const slug = computed(() => withDefaultOnError(() => slugify(input.value), ''));
 const { copy } = useCopy({ source: slug, text: 'Slug copied to clipboard' });
 </script>
